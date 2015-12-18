@@ -19,9 +19,6 @@ android:
     - android-sdk-license-5be876d5
 
 before_script:
-  # Create and start emulator
-  - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
-  - emulator -avd test -no-skin -no-audio -no-window &
 
   # Install Android NDK 10b
   # Note: There is now a difference between Target architecture and Platform architecture. What SHOULD they be?
