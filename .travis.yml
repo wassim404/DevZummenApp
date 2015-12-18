@@ -17,7 +17,8 @@ android:
     - extra-android-m2repository
   licenses:
     - android-sdk-license-5be876d5
-
+   notifications:
+  email: true
 before_script:
 
   # Install Android NDK 10b
