@@ -32,4 +32,4 @@ before_script:
 
 
 
-script: mvn clean install -Dandroid.device=test -P it
+gradle build
