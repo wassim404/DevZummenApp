@@ -31,5 +31,5 @@ before_script:
   - export ANDROID_NDK_HOME=$PWD/android-ndk-r10b
 
 
+script: gradle build
 
-gradle build
