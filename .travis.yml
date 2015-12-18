@@ -30,8 +30,6 @@ before_script:
   - tar xjf ${FILE}
   - export ANDROID_NDK_HOME=$PWD/android-ndk-r10b
 
-  # Make sure the emulator is running.
-  - android-wait-for-emulator
-  - adb shell input keyevent 82 &
+
 
 script: mvn clean install -Dandroid.device=test -P it
