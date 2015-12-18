@@ -1,19 +1,51 @@
-anguage: android
+language: android
+jdk: oraclejdk7
+cache:
+  directories:
+   - node_modules
+sudo: false
+
 android:
   components:
-    - build-tools-19.0.3
+   # Uncomment the lines below if you want to
+    # use the latest revision of Android SDK Tools
+    # - platform-tools
+    # - tools
 
-notifications:
-  email: false
+    # The BuildTools version used by your project
+    - build-tools-23.0.1
 
-before_install:
+    # The SDK version used to compile your project
+    - android-23
 
-  # for gradle output style
-  - export TERM=dumb
+    # Additional components
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
+    # - addon-google_apis-google-19
+    # - add-on
+    # - extra
 
-  # environment info
-  - ./gradlew -v
-  - uname -a
+    # Specify at least one system image,
+    # if you need to run emulator(s) during your tests
+    - sys-img-armeabi-v7a-android-23
+    # - sys-img-x86-android-17
 
-# Let's try to build...
-script: ./gradlew clean build
+  licenses:
+   - 'android-sdk-license-.+'
+
+env:
+  global:
+   # install timeout in minutes (2 minutes by default)
+    - ADB_INSTALL_TIMEOUT=8
+
+# Emulator Management: Create, Start and Wait
+before_script:
+  - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
+
+script:
+  - android list target
+  - ./gradlew connectedAndroidTest
