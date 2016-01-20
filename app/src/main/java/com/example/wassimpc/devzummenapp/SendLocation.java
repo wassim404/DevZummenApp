@@ -47,7 +47,7 @@ public class SendLocation extends AsyncTask<String, Void, String> {
         Log.i("shit", "ccccccccccccccccccccccccccccccccccccccccccccc");
         try {
 
-            jsonObject = jParser.makeHttpRequest("http://192.168.1.9/connectDevZusammen.php", "GET", params); // if you want to test it just put your computer's IPV4
+            jsonObject = jParser.makeHttpRequest("http://192.168.1.7/connectDevZusammen.php", "GET", params); // if you want to test it just put your computer's IPV4
             feedback = jsonObject.toString();
         } catch (Exception e) {
 
