@@ -11,5 +11,6 @@
     <string name="no_location_data_provided">No location data provided</string>
     <string name="service_not_available">Sorry, the service is not available</string>
     <string name="invalid_lat_long_used">Invalid latitude or longitude used</string>
-
+    <string name="title_activity_maps">Map</string>
+<string name="google_maps_key">AIzaSyDaC5UMG3uy192ShS1YWjfLENHrNHhhhrg</string>
 </resources>

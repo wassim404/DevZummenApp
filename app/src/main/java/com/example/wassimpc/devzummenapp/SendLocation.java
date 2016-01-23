@@ -35,7 +35,7 @@ public class SendLocation extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... arg0) {
-        Log.i("shit", "bbbdddddddddddddddddddddddddbbbbbbbbbbbbbbbbb");
+
         JSONPARSER jParser = new JSONPARSER();
         String lng = (String) arg0[0];
         String lat = (String) arg0[1];
@@ -44,7 +44,7 @@ public class SendLocation extends AsyncTask<String, Void, String> {
         params.add(new BasicNameValuePair("lng",lng ));
         params.add(new BasicNameValuePair("lat", lat));
         params.add(new BasicNameValuePair("date", date));
-        Log.i("shit", "ccccccccccccccccccccccccccccccccccccccccccccc");
+
         try {
 
             jsonObject = jParser.makeHttpRequest("http://192.168.1.7/connectDevZusammen.php", "GET", params); // if you want to test it just put your computer's IPV4

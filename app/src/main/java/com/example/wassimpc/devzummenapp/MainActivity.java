@@ -30,18 +30,26 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Calendar;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener{
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener ,OnMapReadyCallback {
     Button b ;
     protected GoogleApiClient mGoogleApiClient;
-    protected Location mLastLocation;
+    static protected Location mLastLocation;
     protected TextView mLatitudeText;
     protected TextView mLongitudeText;
-
+    private GoogleMap mMap;
     protected LocationRequest mLocationRequest;
 
     @Override
@@ -50,7 +58,9 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         mLatitudeText = (TextView) findViewById((R.id.latitude_text));
         mLongitudeText = (TextView) findViewById((R.id.longitude_text));
@@ -59,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements
 
         b= (Button) findViewById(R.id.btn);
 
-
+    //envoyer l'alerte
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,20 +77,14 @@ public class MainActivity extends AppCompatActivity implements
                 Calendar c = Calendar.getInstance();
                 String str = c.getTime().toString();
 
-
                 new SendLocation(getApplicationContext()).execute(Double.toString(mLastLocation.getLongitude()), Double.toString(mLastLocation.getLatitude()), str);
+                //feedback
+                Toast.makeText(getApplicationContext(),"Alerte bien enregistrée",Toast.LENGTH_SHORT).show();
 
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -111,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements
         mLocationRequest = LocationRequest.create();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setInterval(1000);
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,mLocationRequest,this);
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
 
     }
 
@@ -123,6 +127,31 @@ public class MainActivity extends AppCompatActivity implements
         mLatitudeText.setText(String.valueOf(location.getLatitude()));
         mLongitudeText.setText(String.valueOf(location.getLongitude()));
         mLastLocation=location ;
+        try {
+
+            mMap.clear();
+        }catch(Exception e){}
+        LatLng mypos = new LatLng(location.getLatitude(), location.getLongitude());
+
+        //camera annimation
+        CameraPosition camPos = new CameraPosition.Builder().target(mypos)
+                .zoom(70)
+                .bearing(45)
+                .tilt(65)
+                .build();
+
+        CameraUpdate camUpd3 = CameraUpdateFactory.newCameraPosition(camPos);
+
+        mMap.animateCamera(camUpd3);
+
+
+
+        mMap.addMarker(new MarkerOptions().position(mypos).title("here i am !!"));
+
+       // mMap.moveCamera(CameraUpdateFactory.newLatLng(mypos));
+
+
+
     }
 
     @Override
@@ -146,6 +175,12 @@ public class MainActivity extends AppCompatActivity implements
         mGoogleApiClient.connect();
     }
 
+
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+
+    }
 
 
 
