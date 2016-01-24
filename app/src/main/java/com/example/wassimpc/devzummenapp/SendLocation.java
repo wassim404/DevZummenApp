@@ -28,8 +28,6 @@ public class SendLocation extends AsyncTask<String, Void, String> {
     public SendLocation(Context c ) {
 
         this.c = c;
-        // role = roleField;
-        // this.role=role ;
 
     }
 

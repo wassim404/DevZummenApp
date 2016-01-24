@@ -149,6 +149,7 @@ public class MainActivity extends AppCompatActivity implements
         mMap.addMarker(new MarkerOptions().position(mypos).title("here i am !!"));
 
        // mMap.moveCamera(CameraUpdateFactory.newLatLng(mypos));
+        //map.moveCamera(CameraUpdateFactory.newLatLng(mypos));
 
 
 

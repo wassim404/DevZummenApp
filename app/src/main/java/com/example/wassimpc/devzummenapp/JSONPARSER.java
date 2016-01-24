@@ -28,7 +28,6 @@ public  class JSONPARSER {
         if ( method == "POST" ){
             DefaultHttpClient httpClient = new DefaultHttpClient() ;
 
-
             HttpPost httpPost = new HttpPost(url);
 
             try {
