@@ -169,6 +169,8 @@ public class MainActivity extends AppCompatActivity implements
 
     }
     @Override
+    // public void
+
     public void onConnectionSuspended(int cause) {
         // The connection to Google Play services was lost for some reason. We call connect() to
         // attempt to re-establish the connection.
